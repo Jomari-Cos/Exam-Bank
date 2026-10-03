@@ -1,0 +1,441 @@
+{
+  "entities": {
+    "User": {
+      "title": "SystemUser",
+      "description": "Institutional personnel account with Role-Based Access Control permissions and profile attributes.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique system user identifier or Firebase Auth UID",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Full legal or institutional name including professional credentials and academic honorifics",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Institutional email address used for single sign-on authentication",
+          "maxLength": 120
+        },
+        "role": {
+          "type": "string",
+          "description": "Institutional role governing module sandboxing and system privilege boundary",
+          "enum": ["faculty_author", "reviewer", "examiner", "admin"]
+        },
+        "department": {
+          "type": "string",
+          "description": "Institutional academic department or evaluation committee unit",
+          "maxLength": 150
+        },
+        "title": {
+          "type": "string",
+          "description": "Faculty academic rank and positional appointment title",
+          "maxLength": 150
+        },
+        "designation": {
+          "type": "string",
+          "description": "Functional designation title matching assigned institutional role",
+          "maxLength": 100
+        },
+        "avatar": {
+          "type": "string",
+          "description": "1 to 4 letter monogram initials used for avatar badges",
+          "maxLength": 4
+        },
+        "permissions": {
+          "type": "array",
+          "description": "List of explicit Outcome-Based Education capabilities granted under RBAC"
+        }
+      },
+      "required": ["id", "name", "email", "role", "department", "permissions"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "BS Computer Engineering curriculum catalog course with syllabus topics and subtopics.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Official course code (e.g., CPE 201)",
+          "pattern": "^CPE\\s[0-9]{3}$",
+          "maxLength": 20
+        },
+        "title": {
+          "type": "string",
+          "description": "Formal descriptive course title",
+          "minLength": 3,
+          "maxLength": 150
+        },
+        "category": {
+          "type": "string",
+          "description": "Curricular category track",
+          "enum": ["Programming", "CE Fundamentals", "Computing Systems", "Advanced Specialized"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Comprehensive course syllabus description and pedagogical scope",
+          "maxLength": 2000
+        },
+        "topics": {
+          "type": "array",
+          "description": "Array of syllabus topics and detailed subtopics"
+        }
+      },
+      "required": ["code", "title", "category", "description", "topics"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "Examination question item across 12 BSCpE formats with Bloom cognitive taxonomy and CLO mapping.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique institutional question item identifier code",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "program": {
+          "type": "string",
+          "description": "Degree program name",
+          "maxLength": 150
+        },
+        "courseCode": {
+          "type": "string",
+          "description": "Target course code reference",
+          "maxLength": 20
+        },
+        "courseTitle": {
+          "type": "string",
+          "description": "Target course title",
+          "maxLength": 150
+        },
+        "topic": {
+          "type": "string",
+          "description": "Primary course topic name",
+          "maxLength": 150
+        },
+        "subtopic": {
+          "type": "string",
+          "description": "Modular subtopic name",
+          "maxLength": 150
+        },
+        "questionType": {
+          "type": "string",
+          "description": "Question problem format across 12 BSCpE categories",
+          "enum": [
+            "multiple_choice",
+            "true_false",
+            "matching",
+            "fill_in_blank",
+            "coding_problem",
+            "code_completion",
+            "code_snippet",
+            "debugging",
+            "problem_solving",
+            "algorithm_tracing",
+            "pseudocode",
+            "flowchart"
+          ]
+        },
+        "questionText": {
+          "type": "string",
+          "description": "Problem prompt text, code description, or scenario statement",
+          "minLength": 5,
+          "maxLength": 10000
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Pedagogical explanation and scientific answer key justification",
+          "maxLength": 5000
+        },
+        "difficultyLevel": {
+          "type": "string",
+          "description": "Target difficulty tier",
+          "enum": ["Easy", "Medium", "Hard", "Expert"]
+        },
+        "cognitiveLevel": {
+          "type": "string",
+          "description": "Revised Bloom Taxonomy cognitive level classification",
+          "enum": ["Remembering", "Understanding", "Applying", "Analyzing", "Evaluating", "Creating"]
+        },
+        "learningOutcome": {
+          "type": "string",
+          "description": "Course Learning Outcome (CLO) mapped syllabus descriptor",
+          "maxLength": 300
+        },
+        "assessmentType": {
+          "type": "string",
+          "description": "Target assessment tier",
+          "enum": ["Quiz", "Prelim Exam", "Midterm Exam", "Final Exam", "Practical Laboratory"]
+        },
+        "points": {
+          "type": "number",
+          "description": "Item score point value"
+        },
+        "status": {
+          "type": "string",
+          "description": "Curriculum review workflow status",
+          "enum": ["Draft", "Submitted", "For Review", "Approved", "Published", "Archived"]
+        },
+        "author": {
+          "type": "string",
+          "description": "Display name of creating faculty author",
+          "maxLength": 120
+        },
+        "authorId": {
+          "type": "string",
+          "description": "User identifier of creating faculty author",
+          "maxLength": 128
+        },
+        "reviewer": {
+          "type": "string",
+          "description": "Display name of assigned curriculum validator",
+          "maxLength": 120
+        },
+        "academicYear": {
+          "type": "string",
+          "description": "Academic curriculum year",
+          "maxLength": 20
+        },
+        "semester": {
+          "type": "string",
+          "description": "Academic semester term",
+          "enum": ["1st Semester", "2nd Semester", "Summer"]
+        },
+        "version": {
+          "type": "number",
+          "description": "Question revision iteration"
+        },
+        "dateCreated": {
+          "type": "string",
+          "description": "Creation date formatted YYYY-MM-DD",
+          "maxLength": 20
+        },
+        "dateModified": {
+          "type": "string",
+          "description": "Last modification date formatted YYYY-MM-DD",
+          "maxLength": 20
+        }
+      },
+      "required": [
+        "id",
+        "program",
+        "courseCode",
+        "courseTitle",
+        "topic",
+        "questionType",
+        "questionText",
+        "difficultyLevel",
+        "cognitiveLevel",
+        "learningOutcome",
+        "points",
+        "status",
+        "author",
+        "academicYear",
+        "semester",
+        "version",
+        "dateCreated",
+        "dateModified"
+      ]
+    },
+    "ReviewLog": {
+      "title": "ReviewLog",
+      "description": "Audit record of peer validation quality review comments, recommendations, and status decisions.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique review event log ID",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "questionId": {
+          "type": "string",
+          "description": "Target question ID reference",
+          "maxLength": 128
+        },
+        "reviewer": {
+          "type": "string",
+          "description": "Reviewing validator full name",
+          "maxLength": 120
+        },
+        "action": {
+          "type": "string",
+          "description": "Outcome decision",
+          "enum": ["Approved", "Returned", "Rejected"]
+        },
+        "comments": {
+          "type": "string",
+          "description": "Rubric commentary and justification notes",
+          "maxLength": 2000
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Review completion timestamp",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "questionId", "reviewer", "action", "comments", "timestamp"]
+    },
+    "Examination": {
+      "title": "Examination",
+      "description": "Generated examination test paper with multi-set scrambled sequences, Table of Specifications (TOS), and answer keys.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique examination paper ID",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Formal examination title",
+          "maxLength": 200
+        },
+        "courseCode": {
+          "type": "string",
+          "description": "Target course code",
+          "maxLength": 20
+        },
+        "courseTitle": {
+          "type": "string",
+          "description": "Target course title",
+          "maxLength": 150
+        },
+        "academicYear": {
+          "type": "string",
+          "description": "Academic year",
+          "maxLength": 20
+        },
+        "semester": {
+          "type": "string",
+          "description": "Academic semester term",
+          "maxLength": 30
+        },
+        "timeDurationMinutes": {
+          "type": "number",
+          "description": "Allocated examination time duration in minutes"
+        },
+        "totalPoints": {
+          "type": "number",
+          "description": "Cumulative total points"
+        },
+        "totalItems": {
+          "type": "number",
+          "description": "Total question item count"
+        },
+        "status": {
+          "type": "string",
+          "description": "Examination lifecycle state",
+          "enum": ["Draft", "Finalized", "Printed"]
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Name of examining officer",
+          "maxLength": 120
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Generation timestamp",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "courseCode",
+        "courseTitle",
+        "academicYear",
+        "semester",
+        "timeDurationMinutes",
+        "totalPoints",
+        "totalItems",
+        "status",
+        "createdBy",
+        "createdAt"
+      ]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Tamper-evident system activity and security log entry.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique audit log identifier",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Event timestamp string",
+          "maxLength": 50
+        },
+        "user": {
+          "type": "string",
+          "description": "Name of authenticated operator",
+          "maxLength": 120
+        },
+        "role": {
+          "type": "string",
+          "description": "Institutional role of executing user",
+          "enum": ["admin", "faculty_author", "reviewer", "examiner"]
+        },
+        "action": {
+          "type": "string",
+          "description": "System operation label",
+          "maxLength": 100
+        },
+        "entityType": {
+          "type": "string",
+          "description": "Affected entity category",
+          "enum": ["Question", "Exam", "Course", "Setting", "User"]
+        },
+        "entityId": {
+          "type": "string",
+          "description": "Identifier of modified resource",
+          "maxLength": 128
+        },
+        "details": {
+          "type": "string",
+          "description": "Specific audit context details",
+          "maxLength": 2000
+        }
+      },
+      "required": ["id", "timestamp", "user", "role", "action", "entityType", "entityId", "details"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Institutional user accounts with RBAC credentials and authorized permissions."
+    },
+    "/courses/{courseCode}": {
+      "schema": "Course",
+      "description": "BS Computer Engineering curriculum catalog, course modules, and syllabus topics."
+    },
+    "/questions/{questionId}": {
+      "schema": "Question",
+      "description": "Validated and draft questions across 12 formats with Bloom taxonomy tags."
+    },
+    "/questions/{questionId}/review_logs/{logId}": {
+      "schema": "ReviewLog",
+      "description": "Quality assurance and rubric evaluation logs recorded by peer validators."
+    },
+    "/examinations/{examId}": {
+      "schema": "Examination",
+      "description": "Multi-set exam papers, TOS matrices, and scrambled answer keys."
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Append-only immutable system security logs tracking governance operations."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Remix BSCpE Exam Question Data Bank",
+  "description": "Centralized examination question bank and test paper generator system for BS Computer Engineering faculty, reviewers, and administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
